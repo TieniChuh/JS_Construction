@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="GPK">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript" src="cryptico.js"></script>
+		<script type="text/javascript" src="FileSaver.js"></script>
+		<script type="text/javascript" src="jquery.autocomplete.js"></script>
+		
+     <link href="bootstrap.css" rel="stylesheet"/>
+    
+</head>
+<body>
+	<style type="text/css">
+     .thHead {
+        background-color: #DCDCDC;
+    }
+    .thAwardHead {
+        background-color: #DCDCDC;
+        height:40 px;
+    }
+    .bgImg {
+        filter: alpha(opacity=30);
+        -moz-opacity: 0.3;
+        opacity: 0.3;
+    }
+	.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+	.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+	.autocomplete-selected { background: #F0F0F0; }
+	.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+</style>
+<div id="Layer1" style="position:absolute; width:100%; height:100%; z-index:-1">
+    <img src="1.jpg" class="bgImg" height="100%" width="100%"/>
+</div>
+<br><br>
+<div class="container" style=border-style:double >
+	<div class="row clearfix" >
+		<div class="col-md-12 column" style=border-style:inset>
+			<form class="form-horizontal" role="form">
+	 			<div class="form-group">
+					<label for="personalPhraseID"  class="col-sm-2 control-label">Your RSAkey</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="personalPhraseID" value ="123"/>
+					</div>
+				</div>				 
+				<div class="form-group">
+	 	  		<button type="button" class="btn btn-info" id="creatPublicKeyID" onclick="creatPublicKey()">creatPublicKey</button>
+	 			</div>
+	 			<div class="form-group">
+					<label for="personalPublicKeyID"  class="col-sm-2 control-label">Your PublicKey</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="personalPublicKeyID"/>
+					</div>
+				</div>
+ 			</form>
+		</div>
+		<div class="col-md-6 column" style=border-style:inset>
+			<form class="form-horizontal" role="form">
+	 			<div class="form-group">
+					<label for="encryptPublicKeyID"  class="col-sm-4 control-label">Encrypt Public Key</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="encryptPublicKeyID"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputFileID" class="col-sm-4 control-label">Encrypt File input</label>
+					<div class="col-sm-8">
+						<input type="file" id="inputFileID"/>
+						<p class="help-block">
+							select the File need to be encrypted.
+						</p>
+					</div>
+				</div>
+				<div class="form-group">
+	 	  		<button type="button" class="btn btn-info" id="encryptFileID" onclick="encryptFile()">encryptFile</button>
+	 			</div>
+ 			</form>
+		</div>
+		<div class="col-md-6 column" style=border-style:inset>
+			<div class="form-group">
+					<label for="decryptingInputFileID" class="col-sm-4 control-label">Decrypting File input</label>
+					<div class="col-sm-8">
+						<input type="file" id="decryptingInputFileID"/>
+					</div>
+			</div>
+			<div class="form-group">
+	 	  		<button type="button" class="btn btn-info" id="decryptFileID" onclick="decryptFile()">decryptFile</button>
+	 		</div>
+ 			<div class="form-group">
+				<label for="decryptFileResultID"  class="col-sm-2 control-label">decryptFileResult</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="decryptFileResultID"/>
+				</div>
+			</div>
+			<div class="form-group">
+	 	  		<input type="text" name="country" id="autocomplete"/>
+	 		</div>
+		</div>
+	</div>
+</div>
+ 
+<script type="text/javascript">
+	var personalRSAkey;
+function creatPublicKey(){
+	 var personalPhrase = $("#personalPhraseID").val();
+	// 公钥长度
+	 var Bits = 512;
+	// 生成RSA密钥
+ 	personalRSAkey = cryptico.generateRSAKey(personalPhrase, Bits);
+	// RSA公钥:
+	$("#personalPublicKeyID").val(cryptico.publicKeyString(personalRSAkey));
+}
+//加密公钥
+	var PublicKeyString;
+	
+
+function encryptFile(){
+	var passPhrase=$("#passPhraseID").val();
+	if(passPhrase==""){
+		return;
+		}else{
+			var inputFile=$("#inputFileID").val();
+			if(inputFile==""){
+				return;
+				}else{
+					doEncrypt();
+				}
+		}
+	
+	}
+
+function doEncrypt(){
+	if (window.FileReader) {
+		var file =$('#inputFileID')[0];
+		filename = file.files[0].name.split(".")[0]+"_encrypt";
+		PublicKeyString =$("#encryptPublicKeyID").val();
+		var reader = new FileReader();
+		reader.onload = function() {
+			console.log("this.result:"+this.result);
+			var EncryptionResult = cryptico.encrypt(this.result, PublicKeyString);
+			var encrytext = EncryptionResult.cipher;//密文
+			console.log("encrytext:"+encrytext);
+			
+      var blob = new Blob([encrytext], {type: "text/plain;charset=utf-8"});
+			saveAs(blob, filename);
+		}
+		reader.readAsText(file.files[0]);
+	}
+	//支持IE 7 8 9 10
+	else if (typeof window.ActiveXObject != 'undefined'){
+		var xmlDoc;
+		xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+		xmlDoc.async = false;
+		xmlDoc.load(input.value);
+		alert(xmlDoc.xml);
+	}
+}
+function decryptFile(){
+	if (window.FileReader) {
+		var file =$('#decryptingInputFileID')[0];
+		filename = file.files[0].name.split(".")[0]+"_encrypt";
+ 		var reader = new FileReader();
+		reader.onload = function() {
+			console.log("this.result:"+this.result);
+			var DecryptionResult = cryptico.decrypt(this.result, personalRSAkey);
+			var decrypttext = DecryptionResult.plaintext;
+			$("#decryptFileResultID").val(decrypttext);
+		}
+		reader.readAsText(file.files[0]);
+	}
+	//支持IE 7 8 9 10
+	else if (typeof window.ActiveXObject != 'undefined'){
+		var xmlDoc;
+		xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+		xmlDoc.async = false;
+		xmlDoc.load(input.value);
+		alert(xmlDoc.xml);
+	}
+}
+	
+	
+	
+	
+  //<p style=border-style:none>无边框</p>  
+  //<p style=border-style:dotted>点线式边框</p>  
+  //<p style=border-style:dashed>破折线式边框</p>  
+  //<p style=border-style:solid>直线式边框</p>  
+  //<p style=border-style:double>双线式边框</p>  
+  //<p style=border-style:groove>槽线式边框</p>  
+  //<p style=border-style:ridge>脊线式边框</p>  
+  //<p style=border-style:inset>内嵌效果的边框</p>  
+  //<p style=border-style:outset>突起效果的边框</p> 
+var countries = [
+   { value: 'Andorra', data: 'AD' },
+   // ...
+   { value: 'Zimbabwe', data: 'ZZ' }
+];
+ 
+$('#autocomplete').autocomplete({
+    lookup: countries,
+    onSelect: function (suggestion) {
+        console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+    }
+});	
+	
+	
+	
+	//guest Number
+	var allNum=1;
+	//init Guest list to Array.
+	var personList = [];
+	
+var xmlhttp;   // 创建XMLHTTPRequest对象
+
+  function initDinnerList(){
+  		$("#dinnerOptionListTable").find("td").each(function (i, v) {
+	 			personList.push({"No":allNum, "name": v.innerText});
+	 			allNum++;
+	 			console.log(v.innerText);
+  		});
+  		google.charts.setOnLoadCallback(drawChart);
+  		 createXMLHTTPRequest();
+alert("Domain = " + xmlhttp.UserDomain);     
+alert("Computer Name = " + xmlhttp.ComputerName);     
+alert("User Name = " + xmlhttp.UserName); 
+  	}
+	function hideGuestsList(){
+		$("#personListDiv").hide();
+		$("#hideGuestsListBtn").hide();
+		$("#showGuestsListBtn").show();
+		$("#beginRndNumBtn").show();
+		$("#theChosenGuestDiv").show();
+		$("#awardDiv").show();
+	}
+	function showGuestsList(){
+		$("#personListDiv").show();
+		$("#hideGuestsListBtn").show();
+		$("#showGuestsListBtn").hide();
+		$("#beginRndNumBtn").hide();
+		$("#theChosenGuestDiv").hide();
+		$("#awardDiv").hide();
+		for(var i=0;i<allNum-1;i++){
+			console.log(i+"**"+personList[i].name);
+			}
+	}
+	
+//random function start
+var g_Interval = 1;
+var g_Timer;
+var running = false;
+var theChosenOneVar="王小狗";
+function beginRndNum(trigger){
+	if(running){
+		running = false;
+		clearTimeout(g_Timer);		
+		$(trigger).html("开始");
+		$('#theChosenDinner').css('color','red');
+		if(awardTimes==6){
+			$('#theChosenDinner').html(theChosenOneVar);
+			for(var i=0;i<allNum-1;i++){
+				console.log("remain Person:"+personList[i].name);
+			}
+		}else{
+			personList.splice(randomNum, 1);
+			allNum--;
+		}
+	}
+	else{
+		
+		$('#theChosenDinner').css('color','black');
+		$(trigger).html("停止");
+		 
+			running = true;
+			beginTimer();
+
+	}
+}
+
+var randomNum="";
+var awardTimes=0;
+function updateRndNum(){
+		randomNum = Math.floor(Math.random()*(allNum-1));
+		$('#theChosenDinner').html(personList[randomNum].name);
+}
+
+function beginTimer(){
+	g_Timer = setTimeout(beat, g_Interval);
+}
+
+function beat() {
+	g_Timer = setTimeout(beat, g_Interval);
+	updateRndNum();
+}
+//chart function start
+     // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+     // google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        $("#dinnerOptionListTable").find("td").each(function (i, v) {
+			 			personList.push({"No":allNum, "name": v.innerText});
+			 			allNum++;
+			 			console.log(v.innerText);
+			 			data.addRows([
+		          [v.innerText, 1]
+		        	]);
+  		  });
+
+        // Set chart options
+        var options = {'title':'今天吃什么？',
+                       'width':500,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+</script>
+</body>
+</html>
