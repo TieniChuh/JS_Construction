@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	    <script type="text/javascript" src="cryptico.js"></script>
+
+<meta charset="GBK" />
+<script>
+	
+var PassPhrase = "Hello"
+// 公钥长度
+var Bits = 512;
+// 生成RSA密钥
+var RSAkey = cryptico.generateRSAKey(PassPhrase, Bits);
+
+console.log("RSAkey:"+RSAkey);
+// RSA公钥:
+var PublicKeyString = cryptico.publicKeyString(RSAkey);
+console.log("PublicKeyString:"+PublicKeyString);
+
+console.log("publicKeyID:"+cryptico.publicKeyID(PublicKeyString));
+var PlainText = "1,WangXiaoshuai;2,DaBieye;3,AJiong";
+console.log("PlainText:"+PlainText);
+//var  str = (new Buffer(PlainText)).toString("binary");
+// 　　var ret = crypto.createHash('md5').update(str).digest("hex");
+//console.log( ret);
+//使用公钥加密
+var EncryptionResult = cryptico.encrypt(PlainText, PublicKeyString);
+var encrytext = EncryptionResult.cipher;//密文
+console.log("encrytext:"+encrytext);
+//使用私钥解密
+var DecryptionResult = cryptico.decrypt(encrytext, RSAkey);
+var decrypttext = DecryptionResult.plaintext;
+console.log("decrypttext:"+decrypttext);
+
+	
+	
+function upload(input) {
+	//支持chrome IE10
+	if (window.FileReader) {
+		var file =input.files[0];
+		filename = file.name.split(".")[0];
+		var reader = new FileReader();
+		reader.onload = function() {
+			console.log("this.result:"+this.result);
+			var qDecryptionResult = cryptico.decrypt(this.result, RSAkey);
+      var qdecrypttext = qDecryptionResult.plaintext;
+      console.log("this.result:"+qdecrypttext);
+
+			var tempList=qdecrypttext.split(";");
+			for(var i=0;i<tempList.length;i++){
+				var singlePersonInof=tempList[i].split(",");
+				console.log((i+1)+"**"+singlePersonInof[0]+"*****"+singlePersonInof[1]);
+				}
+		}
+		reader.readAsText(file);
+	}
+	//支持IE 7 8 9 10
+	else if (typeof window.ActiveXObject != 'undefined'){
+		var xmlDoc;
+		xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+		xmlDoc.async = false;
+		xmlDoc.load(input.value);
+		alert(xmlDoc.xml);
+	}
+	//支持FF
+	else if (document.implementation && document.implementation.createDocument) {
+		var xmlDoc;
+		xmlDoc = document.implementation.createDocument("", "", null);
+		xmlDoc.async = false;
+		xmlDoc.load(input.value);
+		alert(xmlDoc.xml);
+	} else {
+		alert('error');
+	}
+}
+</script>
+<title>file upload</title>
+</head>
+<body>
+	<input id='file' type="file" onchange="upload(this)" />【注意，参数传的是这个input的html元素,若是jquery，此参数是$('#file')[0]】
+</body>
+</html>

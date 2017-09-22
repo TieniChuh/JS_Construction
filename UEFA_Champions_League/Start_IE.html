@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="GPK">
+    <title>Title</title>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
+    <link href="bootstrap.css" rel="stylesheet"/>
+    <bgsound src="c1.mp3" loop="-1"/>
+</head>
+<body>
+ 
+<div id="Layer1" style="position:absolute; width:100%; height:100%; z-index:-1">
+    <img src="1.jpg" class="bgImg" height="100%" width="100%"/>
+</div>
+<br><br>
+<div class="col-xs-12" id="teamDiv" style="height:190px;">
+    <table border="1" class="col-xs-12" id="teamTable">
+        <tr class="thHead">
+            <th class="col-xs-1">No</th>
+            <th class="text-center">First_Class_Team</th>
+            <th class="text-center">Association</th>
+            <th class="text-center">Second_Class_Team</th>
+            <th class="text-center">Association</th>
+            <th class="text-center">Third_Class_Team</th>
+            <th class="text-center">Association</th>
+            <th class="text-center">Forth_Class_Team</th>
+            <th class="text-center">Association</th>
+        </tr>
+        <tr class="text-center">
+            <td>1</td>
+            <td>Real Madrid</td>
+            <td>ESP</td>
+            <td>Barcelona</td>
+            <td>ESP</td>
+            <td>Napoli</td>
+            <td>ITA</td>
+            <td>Celtic</td>
+            <td>SCO</td>
+        </tr>
+        <tr class="text-center">
+            <td>2</td>
+            <td>Bayern</td>
+            <td>GER</td>
+            <td>Atletico</td>
+            <td>ESP</td>
+            <td>Tottenham</td>
+            <td>ENG</td>
+            <td>CSKA Moskva</td>
+            <td>RUS</td>
+        </tr>
+        <tr class="text-center">
+            <td>3</td>
+            <td>Chelsea</td>
+            <td>ENG</td>
+            <td>Paris</td>
+            <td>FRA</td>
+            <td>Basel</td>
+            <td>SUI</td>
+            <td>Sporting CP</td>
+            <td>POR</td>
+        </tr>
+        <tr class="text-center">
+            <td>4</td>
+            <td>Juventus</td>
+            <td>ITA</td>
+            <td>Dortmund</td>
+            <td>GER</td>
+            <td>Olympiacos</td>
+            <td>GRE</td>
+            <td>APOEL</td>
+            <td>CYP</td>
+        </tr>
+        <tr class="text-center">
+            <td>5</td>
+            <td>Benfica</td>
+            <td>POR</td>
+            <td>Sevilla</td>
+            <td>ESP</td>
+            <td>Anderlecht</td>
+            <td>BEL</td>
+            <td>Feyenoord</td>
+            <td>NED</td>
+        </tr>
+        <tr class="text-center">
+            <td>6</td>
+            <td>Monaco</td>
+            <td>FRA</td>
+            <td>Man. City</td>
+            <td>ENG</td>
+            <td>Liverpool</td>
+            <td>ENG</td>
+            <td>Maribor</td>
+            <td>SVN</td>
+        </tr>
+        <tr class="text-center">
+            <td>7</td>
+            <td>Spartak Moskva</td>
+            <td>RUS</td>
+            <td>Porto</td>
+            <td>POR</td>
+            <td>Roma</td>
+            <td>ITA</td>
+            <td>Leipzig</td>
+            <td>GER</td>
+        </tr>
+        <tr class="text-center">
+            <td>8</td>
+            <td>Shakhtar Donetsk</td>
+            <td>UKR</td>
+            <td>Man. United</td>
+            <td>ENG</td>
+            <td>Besiktas</td>
+            <td>TUR</td>
+            <td>Qarabag</td>
+            <td>AZE</td>
+        </tr>
+    </table>
+    <br>
+</div>
+<div class="col-xs-12" style="height:21px;"></div>
+<div class="col-xs-12" id="matchDiv" style="height:190px;">
+    <table border="1" class="col-xs-12" id="matchTable">
+        <tr class="thHead">
+            <th class="col-xs-1">Team No</th>
+            <th class="text-center">First_Class_Team</th>
+            <th class="text-center">Second_Class_Team</th>
+            <th class="text-center">Third_Class_Team</th>
+            <th class="text-center">Forth_Class_Team</th>
+        </tr>
+    </table>
+    <br>
+</div>
+<div class="col-xs-12" style="height:21px;"></div>
+<div style="margin-top:100px">
+    <button type="button" class="btn btn-primary" onclick="manGo()">ManGo!</button>
+</div>
+</body>
+<script type="text/javascript">
+     //for ie can't support indexof
+    if(!Array.indexOf){
+            Array.prototype.indexOf = function(obj){
+                for(var i=0; i<this.length; i++){
+                    if(this[i]==obj){
+                        return i;
+                    }
+                }
+                return -1;
+            }
+        }
+    var teamNoStr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    var firstClassInfo = [];
+    var sencondClassInfo = [];
+    var thirdClassInfo = [];
+    var forthClassInfo = [];
+    var remainClassInfo = [];
+
+    var aTeamAsso = [];
+    var bTeamAsso = [];
+    var cTeamAsso = [];
+    var dTeamAsso = [];
+    var eTeamAsso = [];
+    var fTeamAsso = [];
+    var gTeamAsso = [];
+    var hTeamAsso = [];
+
+    var aTeamHtml = "";
+    var bTeamHtml = "";
+    var cTeamHtml = "";
+    var dTeamHtml = "";
+    var eTeamHtml = "";
+    var fTeamHtml = "";
+    var gTeamHtml = "";
+    var hTeamHtml = "";
+
+    $("#teamTable").find("tr[class='text-center']").each(function (i, v) {
+        firstClassInfo.push({"tName": v.cells[1].innerText, "tAsso": v.cells[2].innerText});
+        sencondClassInfo.push({"tName": v.cells[3].innerText, "tAsso": v.cells[4].innerText});
+        thirdClassInfo.push({"tName": v.cells[5].innerText, "tAsso": v.cells[6].innerText});
+        forthClassInfo.push({"tName": v.cells[7].innerText, "tAsso": v.cells[8].innerText});
+    });
+    var teamNo = 7;
+    var currentTeamNo = 0;
+    var currentColNo = 0;
+    var emptyHtml = $("#matchTable").html();
+
+    function filterOptionTeam(classInfo) {
+        classInfo = classInfo.concat(remainClassInfo);
+        remainClassInfo = [];
+        var resultArr = [];
+        for (var i = 0; i < classInfo.length; i++) {
+            var flag;
+            if (currentTeamNo == 0) {
+                flag = aTeamAsso.indexOf(classInfo[i].tAsso);
+            } else if (currentTeamNo == 1) {
+                flag = bTeamAsso.indexOf(classInfo[i].tAsso);
+            } else if (currentTeamNo == 2) {
+                flag = cTeamAsso.indexOf(classInfo[i].tAsso);
+            } else if (currentTeamNo == 3) {
+                flag = dTeamAsso.indexOf(classInfo[i].tAsso);
+            } else if (currentTeamNo == 4) {
+                flag = eTeamAsso.indexOf(classInfo[i].tAsso);
+            } else if (currentTeamNo == 5) {
+                flag = fTeamAsso.indexOf(classInfo[i].tAsso);
+            } else if (currentTeamNo == 6) {
+                flag = gTeamAsso.indexOf(classInfo[i].tAsso);
+            } else if (currentTeamNo == 7) {
+                flag = hTeamAsso.indexOf(classInfo[i].tAsso);
+            }
+            if (flag < 0) {
+                resultArr.push(classInfo[i]);
+            } else {
+                remainClassInfo.push(classInfo[i]);
+            }
+        }
+        return resultArr;
+    }
+    function addTeamAsso(currentAsso, htmlVal) {
+        if (currentTeamNo == 0) {
+            aTeamAsso.push(currentAsso);
+            return aTeamHtml += htmlVal;
+        } else if (currentTeamNo == 1) {
+            bTeamAsso.push(currentAsso);
+            return bTeamHtml += htmlVal;
+        } else if (currentTeamNo == 2) {
+            cTeamAsso.push(currentAsso);
+            return cTeamHtml += htmlVal;
+        } else if (currentTeamNo == 3) {
+            dTeamAsso.push(currentAsso);
+            return dTeamHtml += htmlVal;
+        } else if (currentTeamNo == 4) {
+            eTeamAsso.push(currentAsso);
+            return eTeamHtml += htmlVal;
+        } else if (currentTeamNo == 5) {
+            fTeamAsso.push(currentAsso);
+            return fTeamHtml += htmlVal;
+        } else if (currentTeamNo == 6) {
+            gTeamAsso.push(currentAsso);
+            return gTeamHtml += htmlVal;
+        } else if (currentTeamNo == 7) {
+            hTeamAsso.push(currentAsso);
+            return hTeamHtml += htmlVal;
+        }
+    }
+    function buildRestHtml(buildHtmlVal) {
+        var htmlValbuildRestHtml = "";
+        if (currentTeamNo == 0) {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + aTeamHtml + buildHtmlVal + "</tr>";
+        } else {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + aTeamHtml + "</tr>";
+        }
+        if (currentTeamNo == 1) {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + bTeamHtml + buildHtmlVal + "</tr>";
+        } else {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + bTeamHtml + "</tr>";
+        }
+        if (currentTeamNo == 2) {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + cTeamHtml + buildHtmlVal + "</tr>";
+        } else {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + cTeamHtml + "</tr>";
+        }
+        if (currentTeamNo == 3) {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + dTeamHtml + buildHtmlVal + "</tr>";
+        } else {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + dTeamHtml + "</tr>";
+        }
+        if (currentTeamNo == 4) {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + eTeamHtml + buildHtmlVal + "</tr>";
+        } else {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + eTeamHtml + "</tr>";
+        }
+        if (currentTeamNo == 5) {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + fTeamHtml + buildHtmlVal + "</tr>";
+        } else {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + fTeamHtml + "</tr>";
+        }
+        if (currentTeamNo == 6) {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + gTeamHtml + buildHtmlVal + "</tr>";
+        } else {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + gTeamHtml + "</tr>";
+        }
+        if (currentTeamNo == 7) {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + hTeamHtml + buildHtmlVal + "</tr>";
+        } else {
+            htmlValbuildRestHtml += " <tr class='text-center'> " + hTeamHtml + "</tr>";
+        }
+        return htmlValbuildRestHtml;
+    }
+    function manGo() {
+        if (currentTeamNo > 7) {
+            currentColNo++;
+            currentTeamNo = 0;
+            return;
+        }
+        if (currentColNo > 3) {
+            return;
+        }
+        var tabelInfo = $("#matchTable").html();
+        var htmlVal = "";
+        htmlVal += " <tr class='text-center'> ";
+        //first columns
+        if (currentColNo == 0) {
+            var firTeamRandom = getRandom(teamNo);
+            var htmlValTemp = "";
+            htmlValTemp += " <td >" + teamNoStr[currentTeamNo] + "</td> ";
+            htmlValTemp += " <td >¡¾" + firstClassInfo[firTeamRandom].tName + "¡¿      [" + firstClassInfo[firTeamRandom].tAsso + "]</td> ";
+            htmlVal += addTeamAsso(firstClassInfo[firTeamRandom].tAsso, htmlValTemp);
+            firstClassInfo.splice(firTeamRandom, 1);
+        } else if (currentColNo == 1) {
+            tabelInfo = emptyHtml;
+            var optionArr = filterOptionTeam(sencondClassInfo);
+            if (optionArr.length == 0) {
+                optionArr = remainClassInfo
+            }
+            var senTeamRandom = getRandom(optionArr.length - 1);
+            var htmlValTemp = "";
+            htmlValTemp += " <td >¡¾" + optionArr[senTeamRandom].tName + "¡¿      [" + optionArr[senTeamRandom].tAsso + "]</td> ";
+
+
+            htmlVal += buildRestHtml(htmlValTemp);
+            addTeamAsso(optionArr[senTeamRandom].tAsso, htmlValTemp);
+            optionArr.splice(senTeamRandom, 1);
+            sencondClassInfo = optionArr;
+         } else if (currentColNo == 2) {
+            tabelInfo = emptyHtml;
+            var optionArr = filterOptionTeam(thirdClassInfo);
+            if (optionArr.length == 0) {
+                optionArr = remainClassInfo
+            }
+            var thrTeamRandom = getRandom(optionArr.length - 1);
+            var htmlValTemp = "";
+            htmlValTemp += " <td >¡¾" + optionArr[thrTeamRandom].tName + "¡¿      [" + optionArr[thrTeamRandom].tAsso + "]</td> ";
+
+
+            htmlVal += buildRestHtml(htmlValTemp);
+            addTeamAsso(optionArr[thrTeamRandom].tAsso, htmlValTemp);
+            optionArr.splice(thrTeamRandom, 1);
+            thirdClassInfo = optionArr;
+        } else if (currentColNo == 3) {
+            tabelInfo = emptyHtml;
+            var optionArr = filterOptionTeam(forthClassInfo);
+            if (optionArr.length == 0) {
+                optionArr = remainClassInfo
+            }
+            var forTeamRandom = getRandom(optionArr.length - 1);
+            var htmlValTemp = "";
+            htmlValTemp += " <td >¡¾" + optionArr[forTeamRandom].tName + "¡¿      " + optionArr[forTeamRandom].tAsso + "</td> ";
+
+
+            htmlVal += buildRestHtml(htmlValTemp);
+            addTeamAsso(optionArr[forTeamRandom].tAsso, htmlValTemp);
+            optionArr.splice(forTeamRandom, 1);
+            forthClassInfo = optionArr;
+        }
+
+        htmlVal += " </tr> ";
+        $("#matchTable").html(tabelInfo + htmlVal);
+        teamNo--;
+        currentTeamNo++;
+    }
+
+    function getRandom(n) {
+        return Math.floor(Math.random() * n)
+    }
+</script>
+
+<style type="text/css">
+    .thHead {
+        background-color: #DCDCDC;
+    }
+    .bgImg {
+        filter: alpha(opacity=30);
+        -moz-opacity: 0.3;
+        opacity: 0.3;
+    }
+</style>
+</html>

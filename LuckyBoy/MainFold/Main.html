@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="GPK">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+     <link href="bootstrap.css" rel="stylesheet"/>
+    
+</head>
+<body>
+	<style type="text/css">
+    .thHead {
+        background-color: #DCDCDC;
+    }
+    .thAwardHead {
+        background-color: #DCDCDC;
+        height:40 px;
+    }
+    .bgImg {
+        filter: alpha(opacity=30);
+        -moz-opacity: 0.3;
+        opacity: 0.3;
+    }
+</style>
+<audio autoplay="autoplay" height="100" width="100">
+  <source src="c1.mp3" type="audio/mp3" />
+  <source src="c1.mp3" type="audio/ogg" />
+  <embed height="100" width="100" src="c1.mp3" />
+</audio>
+<div id="Layer1" style="position:absolute; width:100%; height:100%; z-index:-1">
+    <img src="1.jpg" class="bgImg" height="100%" width="100%"/>
+</div>
+<br><br>
+<div class="col-xs-12" id="personListDiv" >
+    <table border="1" class="col-xs-12" id="personListTable">
+        <tr class="thHead">
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-heart"/>×ÀºÅ</th>
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"/>¼Î±ö</th>
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"/>¼Î±ö</th>
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"/>¼Î±ö</th>
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"/>¼Î±ö</th>
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"/>¼Î±ö</th>
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"/>¼Î±ö</th>
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"/>¼Î±ö</th>
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"/>¼Î±ö</th>
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"/>¼Î±ö</th>
+            <th class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"/>¼Î±ö</th>
+         </tr>
+         <tr class="text-center">
+            <td>1</td>
+            <td>1_1WangXiaoShuai</td>
+            <td>1_2SanHouDie</td>
+            <td>1_3DaBieye</td>
+            <td>1_4AJiong</td>
+            <td>1_5Jin</td>
+            <td>1_6Real Madrid</td>
+            <td>1_7Barcelona</td>
+            <td>1_8Napoli</td>
+            <td>1_9Celtic</td>
+            <td>1_10Bayern</td>
+        </tr>
+        <tr class="text-center">
+            <td>2</td>
+            <td>2_1WangXiaoShuai</td>
+            <td>2_2SanHouDie</td>
+            <td>2_3DaBieye</td>
+            <td>2_4AJiong</td>
+            <td>2_5Jin</td>
+            <td>2_6Real Madrid</td>
+            <td>2_7Barcelona</td>
+            <td>2_8Napoli</td>
+            <td>2_9Celtic</td>
+            <td>2_10Bayern</td>
+        </tr>
+        <tr class="text-center">
+            <td>3</td>
+            <td>3_1WangXiaoShuai</td>
+            <td>3_2SanHouDie</td>
+            <td>3_3DaBieye</td>
+            <td>3_4AJiong</td>
+            <td>3_5Jin</td>
+            <td>3_6Real Madrid</td>
+            <td>3_7Barcelona</td>
+            <td>3_8Napoli</td>
+            <td>3_9Celtic</td>
+            <td>3_10Bayern</td>
+        </tr>
+      </table>
+    </div>
+<div id="awardDiv" style="display: none;">
+<div id="firstAward" class="col-md-6 col-md-offset-3"  style="height:30%;">
+			<table border="1" class="col-xs-12">
+				<tr class="thAwardHead">
+            <th class="col-xs-1 text-center" colspan="3">
+            	<h1><span class="glyphicon glyphicon-phone"/>Ò»µÈ</h1>
+            </th>
+       </tr>
+			<tr class="text-center"> 
+					<td id="1-1"><h1>1_No_1Ò»µÈ</h1></td>
+			</tr>
+		</table>
+</div>  
+<div id="secondaryAward" class="col-md-8 col-md-offset-2">
+			<table border="1" class="col-xs-12" >
+				<tr class="thAwardHead">
+            <th class="col-xs-1 text-center" colspan="3">
+            	<h2><span class="glyphicon glyphicon-tower"/>¶þµÈ</h2>
+            </th>
+       </tr>
+			<tr class="text-center" style="height:80%;">
+					<td id="2-1"><h1>2_No_1</h1></td><td id="2-2"><h1>2_No_2</h1></td>
+			</tr>
+		</table>
+</div>
+<div id="tertiaryAward" class="col-md-10 col-md-offset-1">
+		<table border="1" class="col-xs-12"  style="height:200 px;">
+			 <tr class="thAwardHead">
+            <th class="col-xs-1 text-center" colspan="3">
+            	<h3><span class="glyphicon glyphicon-star"/>ÈýµÈ</h3>
+            </th>
+       </tr>
+			<tr class="text-center">
+					<td id="3-1">3_No_1</td><td id="3-2"><h1>3_No_2</h1></td><td id="3-3"><h1>3_No_3</h1></td>
+			</tr>
+		</table>
+</div>
+</div>
+
+  <br>
+<div class="col-md-6 col-md-offset-3" id="theChosenGuestDiv"  style="display: none;">
+		<table border="1" class="col-xs-12" >
+	 			<tr>
+	 					<td class="text-center" style="color:#40AA53;height:40px;width:200px">
+	 							<h1><span id="theChosenGuest">0</span></h1>
+	 					</td>
+	 			</tr>
+		</table>
+</div>
+ <div class="col-xs-12" >
+    <button type="button" class="btn btn-info" id="hideGuestsListBtn" onclick="hideGuestsList()">Guests_Hide</button>
+    <button type="button" class="btn btn-info" id="showGuestsListBtn" onclick="showGuestsList()" style="display: none;">Guests_Show!</button>      
+    <button type="button" class="btn btn-info btn-lg" id="beginRndNumBtn" onclick="beginRndNum(this)" style="display: none;">¿ªÊ¼</button>          
+</div>
+<script type="text/javascript">
+	//guest Number
+	var allNum=1;
+	//init Guest list to Array.
+	var personList = [];
+	$("#personListTable").find("tr[class='text-center']").each(function (i, v) {
+	 		for(var ii=1;ii<=10;ii++){
+	 			personList.push({"No":allNum, "name": v.cells[ii].innerText});
+	 			allNum++;
+	 		}
+  });
+	function hideGuestsList(){
+		$("#personListDiv").hide();
+		$("#hideGuestsListBtn").hide();
+		$("#showGuestsListBtn").show();
+		$("#beginRndNumBtn").show();
+		$("#theChosenGuestDiv").show();
+		$("#awardDiv").show();
+	}
+	function showGuestsList(){
+		$("#personListDiv").show();
+		$("#hideGuestsListBtn").show();
+		$("#showGuestsListBtn").hide();
+		$("#beginRndNumBtn").hide();
+		$("#theChosenGuestDiv").hide();
+		$("#awardDiv").hide();
+		for(var i=0;i<allNum-1;i++){
+			console.log(i+"**"+personList[i].name);
+			}
+	}
+	//random
+var g_Interval = 1;
+var g_Timer;
+var running = false;
+var theChosenOneVar="ÍõÐ¡¹·";
+function beginRndNum(trigger){
+	if(running){
+		running = false;
+		clearTimeout(g_Timer);		
+		$(trigger).html("¿ªÊ¼");
+		$('#theChosenGuest').css('color','red');
+		if(awardTimes==6){
+			$('#theChosenGuest').html(theChosenOneVar);
+			for(var i=0;i<allNum-1;i++){
+				console.log("remain Person:"+personList[i].name);
+			}
+		}else{
+			personList.splice(randomNum, 1);
+			allNum--;
+		}
+	}
+	else{
+		
+		$('#theChosenGuest').css('color','black');
+		$(trigger).html("Í£Ö¹");
+		if(awardTimes<6){
+			running = true;
+			beginTimer();
+		}
+
+		if(awardTimes==0){
+			awardTimes++;
+		}else if(awardTimes==1){
+			$("#3-1").html("<h1>"+$('#theChosenGuest').html()+"</h1>");
+			awardTimes++;
+		}else if(awardTimes==2){
+			$("#3-2").html("<h1>"+$('#theChosenGuest').html()+"</h1>");
+			awardTimes++;
+		}else if(awardTimes==3){
+			$("#3-3").html("<h1>"+$('#theChosenGuest').html()+"</h1>");
+			awardTimes++;
+		}else if(awardTimes==4){
+			$("#2-1").html("<h1>"+$('#theChosenGuest').html()+"</h1>");
+			awardTimes++;
+		}else if(awardTimes==5){
+			$("#2-2").html("<h1>"+$('#theChosenGuest').html()+"</h1>");
+			awardTimes++;
+		}else if(awardTimes==6){
+			$("#1-1").html("<h1> "+theChosenOneVar+" </h1>");
+			awardTimes++;
+		}
+	}
+}
+//
+var randomNum="";
+var awardTimes=0;
+function updateRndNum(){
+		randomNum = Math.floor(Math.random()*(allNum-1));
+		$('#theChosenGuest').html(personList[randomNum].name);
+}
+
+function beginTimer(){
+	g_Timer = setTimeout(beat, g_Interval);
+}
+
+function beat() {
+	g_Timer = setTimeout(beat, g_Interval);
+	updateRndNum();
+}
+</script>
+</body>
+</html>
