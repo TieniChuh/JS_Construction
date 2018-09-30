@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="GPK">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+     <link href="bootstrap.css" rel="stylesheet"/>
+     <script type="text/javascript" src="bootstrap-select.js"></script>
+     <link href="bootstrap-select.css" rel="stylesheet"/>
+    
+</head>
+<body>
+	<style type="text/css">
+    .thHead {
+        background-color: #DCDCDC;
+    }
+    .thAwardHead {
+        background-color: #DCDCDC;
+        height:40 px;
+    }
+    .bgImg {
+        filter: alpha(opacity=30);
+        -moz-opacity: 0.3;
+        opacity: 0.3;
+    }
+</style>
+<audio autoplay="autoplay" height="100" width="100">
+  <source src="c1.mp3" type="audio/mp3" />
+  <source src="c1.mp3" type="audio/ogg" />
+  <embed height="100" width="100" src="c1.mp3" />
+</audio>
+<div id="Layer1" style="position:absolute; width:100%; height:100%; z-index:-1">
+    <img src="1.jpg" class="bgImg" height="100%" width="100%"/>
+</div><br><br>
+<div class="container">
+	<div class="row clearfix" style="border:1px solid #000000;">
+ 		<div class="col-md-2 column" style="border:1px solid #000000; height:500px" >
+			<br><br>
+			<div class="row">
+				<div class="col-md-5 column" style="Padding-left:5px;Padding-right:0px;padding-top:5px" align="left" ><hs>口算范围</hs>
+				</div>
+				<div class="col-md-7 column" style="Padding-left:0px" align="center"  >
+							<select class="selectpicker" id="ocRange" data-width="100px" >
+								<option value="10">10以下</option>
+								<option value="20">20以下</option>
+								<option value="50">50以下</option>
+								<option value="100">100以下</option>
+							</select>
+				</div>
+		  </div>
+		  <div class="row">
+		    <div class="col-md-5 column" style="Padding-left:5px;Padding-right:0px;padding-top:5px" align="left"><hs>时间限定</hs>
+				</div>
+		  	<div class="col-md-7 column" style="Padding-left:0px" align="left">
+							<select class="selectpicker"  id="timeRange" data-width="100px">
+								<option value="60">1分钟</option>
+								<option value="120">2分钟</option>
+								<option value="300">5分钟</option>
+	 						</select>
+				</div>
+			</div>
+			<br> 
+			 <button id="btn" type="button" class="btn btn-primary btn-sm btn-block" onclick="settime(this)">开始计时</button>
+			 <br> 
+			<div class="row">
+			  <div class="col-md-12 column" align="left" >
+					<button type="button"  class="btn btn-sm btn-primary btn-block" aria-label="Left Align">
+				     <span class="glyphicon glyphicon-flash" aria-hidden="true"> 已答:  <span class="badge" id="allSpan">0</span></span>
+			    </button>
+			  </div>
+		  </div>
+	    <div class="row">
+			  <div class="col-md-12 column" align="left" >
+					<button type="button"  class="btn btn-sm btn-success btn-block" aria-label="Left Align">
+				     <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"> 正确:  <span class="badge" id="rightSpan">0</span></span>
+			    </button>
+			  </div>
+		  </div>
+		  <div class="row">
+			  <div class="col-md-12 column" align="left" >
+					<button type="button"  class="btn btn-sm btn-danger btn-block" aria-label="Left Align">
+				     <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"> 错误:  <span class="badge" id="errSpan">0</span></span>
+			    </button>
+			  </div>
+		  </div>
+			<div class="row">
+		    <div class="col-md-12 column" align="center" id="showCD">
+				</div>
+			</div>
+			
+			
+			<div class="row">
+			  <div class="col-md-12 column" align="left" >
+					<button type="button"  class="btn btn-sm btn-danger btn-block" aria-label="Left Align">
+				     <span class="glyphicon glyphicon-tower" aria-hidden="true"> 正确率:  <span class="badge" id="persentSpan">&nbsp;0  %</span></span>
+			    </button> 
+			  </div>
+		  </div>
+			
+		</div>
+		<div class="col-md-10 column" align="center" style="border:1px solid #000000; height:500px">
+			<div class="row" style="height:440px">
+		    <div class="col-md-12 column" align="center" id="beastDiv">
+				</div>
+			</div>
+			 <button id="rightButton" type="button"  class="btn btn-sm btn-success" aria-label="Left Align" onclick="answerRight()">
+				  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+			 </button>
+			 <button id="wrongButton"  type="button" class="btn btn-sm btn-danger" aria-label="Left Align" onclick="answerWrong()"  hidden="true">
+				  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+			 </button>
+ 		</div>
+	</div>
+</div>
+<br><br>
+<style>
+hx {font-size:240px;}
+hs {font-size:15px;
+	font-weight: bold;}
+</style>
+<script type="text/javascript">
+	            $("#rightButton").hide();
+            $("#wrongButton").hide();
+	//countDown_Begin
+    var countdown=$("#timeRange").val();
+    var isFirst=true;
+    function settime(val) {
+    		if(isFirst){
+    			console.log("startfirgf");
+    			isFirst=false;
+    			releaseTheBeast();
+    			$("#rightButton").show();
+          $("#wrongButton").show();
+          
+         $("#allSpan").html("0");
+         $("#errSpan").html("0");
+         $("#rightSpan").html("0");
+ 
+          console.log("end");
+    		}
+        if (countdown < 0) {
+            val.removeAttribute("disabled");
+            $("#showCD").html("");
+            $("#rightButton").hide();
+            $("#wrongButton").hide();
+            this.isFirst=true;
+            countdown=$("#timeRange").val();
+         } else {
+             val.setAttribute("disabled", true);
+            $("#showCD").html("距离结束还有：" + countdown + " 秒");
+
+            countdown--;
+            setTimeout(function() {
+                settime(val)
+            },1000)
+        }
+    }
+	//countDown_End
+	function releaseTheBeast(){
+		var ocRange=$("#ocRange").val();
+		var relaseFlag=true;
+		console.log(ocRange);
+		while(relaseFlag){
+					var fNumb = Math.floor(Math.random()*(ocRange-1));
+					var sNumb = Math.floor(Math.random()*(ocRange-1));
+					console.log(fNumb+"####"+sNumb);
+					if(fNumb+sNumb<=ocRange){
+						relaseFlag=false;
+						 $("#beastDiv").html("<hx>"+fNumb+"+"+sNumb+"=?</hx>");
+					}
+					if((fNumb-sNumb<=ocRange)&&(fNumb-sNumb>=0)){
+						relaseFlag=false;
+						 $("#beastDiv").html("<hx>"+fNumb+"-"+sNumb+"=?</hx>");
+					}
+			}
+	}
+	function answerRight(){
+				var allCount=parseInt($("#allSpan").html());
+				allCount=allCount+1;
+				$("#allSpan").html(allCount);
+				
+				var count=parseInt($("#rightSpan").html());
+				count=count+1;
+				$("#rightSpan").html(count);
+				
+				var persent=(count/allCount*100).toFixed(2)
+				$("#persentSpan").html(persent+"%");
+				
+				
+				releaseTheBeast();
+ 		}
+		function answerWrong(){
+				var allCount=parseInt($("#allSpan").html());
+				allCount=allCount+1;
+				$("#allSpan").html(allCount);
+				
+				var count=parseInt($("#errSpan").html());
+				count=count+1;
+				$("#errSpan").html(count);
+				
+				var rightCount=parseInt($("#rightSpan").html());
+				var persent=(rightCount/allCount*100).toFixed(2)
+				$("#persentSpan").html(persent+"%");
+				
+				releaseTheBeast();
+		}
+	 
+</script>
+</body>
+</html>
